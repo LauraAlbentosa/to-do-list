@@ -1,0 +1,12 @@
+.form{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+
+    .tasks__card{
+        height: 50px;
+        background-color: white;
+        padding: 10px;
+        border-radius: 8px;
+    }
+}
