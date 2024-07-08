@@ -6,6 +6,9 @@ const inputTextElement = document.getElementById('input');
 const divTasks = document.getElementById('tasks');
 const taskActive = document.getElementById('task-number');
 const clearButton = document.getElementById('clear-btn');
+const completedButton = document.getElementById('complete-btn');
+const checkedTasks = document.getElementById('completed-btn');
+const activeTasks = document.getElementById('active-btn');
 
 let allTasks = [];
 
@@ -42,26 +45,34 @@ const createTask = task => {
 
 const readTask = event => {
   event.preventDefault();
-  if (!inputTextElement.value) {
+  if (!inputTextElement.value || inputTextElement.value === ' ') {
     return;
   } else {
     createTask(inputTextElement.value);
   }
 };
 
-const checkTask = () => {
-  console.log(newtCheck.c);
-};
 
-const removeTask = event => {
+
+const checked = event => {
   event.preventDefault();
+  
   const inputCheck = document.querySelectorAll('input[type=checkbox]');
+    console.log(inputCheck)
 
   for (let i = 0; i < allTasks.length; i++) {
     if (inputCheck[i].checked) {
       allTasks[i].completed = true;
+    } else {
+      allTasks[i].completed = false;
     }
   }
+};
+
+
+const removeTask = event => {
+  event.preventDefault();
+  checked(event);
 
   const newTasks = allTasks.filter(task => !task.completed);
 
@@ -87,31 +98,63 @@ const removeTask = event => {
   });
 };
 
-formElement.addEventListener('submit', printTask);
-clearButton.addEventListener('click', removeTask);
-
-/*
-const createTask = event => {
+const completed = event => {
   event.preventDefault();
-  const fragment = document.createDocumentFragment();
+  checked(event);
 
-  const newDiv = document.createElement('div');
-  const newText = document.createElement('span');
-  const newtCheck = document.createElement('input');
-  newtCheck.setAttribute('type', 'checkbox');
+  const completedTasks = allTasks.filter(task => task.completed);
+  console.log(allTasks);
 
-  newText.textContent = inputTextElement.value;
-  taskCount++;
+  divTasks.textContent = ' ';
+  completedTasks.forEach(task => {
+    const fragment = document.createDocumentFragment();
+    const newDiv = document.createElement('div');
+    const newText = document.createElement('label');
+    const newtCheck = document.createElement('input');
+    newtCheck.setAttribute('type', 'checkbox');
+    newtCheck.checked = true;
+    newText.textContent = task.tasks;
 
-  newDiv.append(newtCheck, newText);
-  newDiv.classList.add('task');
+    newDiv.append(newtCheck, newText);
+    newDiv.classList.add('task');
 
-  inputTextElement.value = ' ';
+    inputTextElement.value = ' ';
 
-  fragment.append(newDiv);
-  divTasks.append(fragment);
+    fragment.append(newDiv);
+    divTasks.append(fragment);
+  });
+  console.log(allTasks);
 };
 
-formElement.addEventListener('submit', createTask);
+const active = event => {
+  event.preventDefault();
+  checked(event);
 
-*/
+  const activeTasks = allTasks.filter(task => !task.completed);
+
+  divTasks.textContent = ' ';
+  activeTasks.forEach(task => {
+    const fragment = document.createDocumentFragment();
+    const newDiv = document.createElement('div');
+    const newText = document.createElement('label');
+    const newtCheck = document.createElement('input');
+    newtCheck.setAttribute('type', 'checkbox');
+
+    newText.textContent = task.tasks;
+
+    newDiv.append(newtCheck, newText);
+    newDiv.classList.add('task');
+
+    inputTextElement.value = ' ';
+
+    fragment.append(newDiv);
+    divTasks.append(fragment);
+  });
+  
+};
+
+formElement.addEventListener('submit', printTask);
+clearButton.addEventListener('click', removeTask);
+completedButton.addEventListener('click', removeTask);
+checkedTasks.addEventListener('click', completed);
+activeTasks.addEventListener('click', active);
