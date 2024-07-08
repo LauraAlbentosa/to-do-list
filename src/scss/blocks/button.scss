@@ -1,0 +1,16 @@
+@use '../mixins/hover.scss' as *;
+
+
+.button{
+    border: none;
+    background-color: white;
+    font-size: 0.7rem;
+    @include hover{
+        color:blue;
+        cursor: pointer;
+    }
+}
+
+.active{
+    color: blue;
+}

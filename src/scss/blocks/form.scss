@@ -8,5 +8,27 @@
         background-color: white;
         padding: 10px;
         border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .tasks__state{
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        align-items: center;
+        
+        background-color: white;
+        height: 50px;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .task{
+        display:flex;
+        
+        height: 50px;
+        background-color: white;
+        padding: 10px;
+        border-radius: 8px;
+        border-bottom: 2px solid grey;
     }
 }
